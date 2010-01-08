@@ -1,0 +1,24 @@
+Metadata-Version: 1.0
+Name: sorl-thumbnail
+Version: 3.2.5
+Summary: Thumbnails for Django
+Home-page: http://code.google.com/p/sorl-thumbnail/
+Author: Mikko Hellsing, Chris Beaven
+Author-email: UNKNOWN
+License: UNKNOWN
+Download-URL: http://sorl-thumbnail.googlecode.com/files/sorl-thumbnail-3.2.5.tar.gz
+Description: sorl-thumbnail is a simple to use thumbnailing application for Django.
+        
+        All documentation is in the "docs" directory and online at
+        http://thumbnail.sorl.net/docs/
+        
+Platform: any
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
