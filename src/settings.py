@@ -6,12 +6,11 @@ from sys import argv
 # Django settings for scribblitt project.
 
 # Set DEBUG = True if on the production server
-LOCAL_SERVER_ARGS = ['runserver', 'runserver_plus', 'runprofileserver', ]
+LOCAL_SERVER_ARGS = ('runserver', 'runserver_plus', 'runprofileserver', )
 if len(set(argv) & set(LOCAL_SERVER_ARGS)) > 0:
     DEBUG = True
 else:
     DEBUG = False
-DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -21,12 +20,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ''
+    }
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -63,7 +62,7 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '%sadmin-media/' % MEDIA_URL
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '_5f^c*ecga=1@=c1=e*mfo_t*a3ox9mg0yc09su9uix68*3fvb'
+SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
