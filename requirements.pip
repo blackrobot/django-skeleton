@@ -1,0 +1,9 @@
+# Django
+django
+
+# Django extensions
+werkzeug
+http://django-command-extensions.googlecode.com/files/django-extensions-0.4.1.tar.gz
+
+# Django Debug Toolbar
+-e git://github.com/robhudson/django-debug-toolbar.git

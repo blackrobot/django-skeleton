@@ -1,9 +1,6 @@
 # vim: ai ts=4 sts=4 et sw=4
 import os
-import socket
 from sys import argv
-
-# Django settings for scribblitt project.
 
 # Set DEBUG = True if on the production server
 LOCAL_SERVER_ARGS = ['runserver', 'runserver_plus', 'runprofileserver', ]
@@ -11,7 +8,6 @@ if len(set(argv) & set(LOCAL_SERVER_ARGS)) > 0:
     DEBUG = True
 else:
     DEBUG = False
-DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -21,12 +17,16 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -44,6 +44,10 @@ SITE_ID = 1
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = False
+
+# If you set this to False, Django will not format dates, numbers and
+# calendars according to the current locale
+USE_L10N = False
 
 # This dynamically discovers the path to the project
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
@@ -63,12 +67,13 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '%sadmin-media/' % MEDIA_URL
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '_5f^c*ecga=1@=c1=e*mfo_t*a3ox9mg0yc09su9uix68*3fvb'
+SECRET_KEY = 'CHANGE ME'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 # Context Processors
@@ -86,7 +91,9 @@ if USE_I18N:
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 if DEBUG:
@@ -110,7 +117,7 @@ INSTALLED_APPS = (
     # Third Party Django Applications
     'django_extensions',
     'sorl.thumbnail',
-    
+
     # Project Applications
 )
 
@@ -118,7 +125,7 @@ if DEBUG:
     INSTALLED_APPS += ('debug_toolbar',)
 
 TEMPLATE_TAGS = (
-    'sorl.thumbnail.templatetags.thumbnail',
+    # 'sorl.thumbnail.templatetags.thumbnail',
 )
 
 # SORL Settings
