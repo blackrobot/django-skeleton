@@ -3,7 +3,7 @@ import os
 from sys import argv
 
 # Set DEBUG = True if on the production server
-LOCAL_SERVER_ARGS = ['runserver', 'runserver_plus', 'runprofileserver', ]
+LOCAL_SERVER_ARGS = ('runserver', 'runserver_plus', 'runprofileserver', )
 if len(set(argv) & set(LOCAL_SERVER_ARGS)) > 0:
     DEBUG = True
 else:
