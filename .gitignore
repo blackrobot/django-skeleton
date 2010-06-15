@@ -9,5 +9,5 @@
 *.sqlite
 
 # ignore environment and local settings files
-local_settings.py
-local_env/
+# local_settings.py
+local-env/

@@ -116,7 +116,6 @@ INSTALLED_APPS = (
 
     # Third Party Django Applications
     'django_extensions',
-    'sorl.thumbnail',
 
     # Project Applications
 )
