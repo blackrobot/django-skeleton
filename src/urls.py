@@ -6,7 +6,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
     # Example:
-    # (r'^pictela/', include('pictela.foo.urls')),
+    # (r'^news/', include('news.foo.urls')),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
@@ -18,4 +18,8 @@ urlpatterns = patterns('',
 
 import sys
 if 'runserver' in sys.argv or 'runserver_plus':
-    urlpatterns = patterns('', url(r'^media/(.*)$', 'django.views.static.serve', kwargs={'document_root': os.path.join(settings.PROJECT_PATH, 'media')}), ) + urlpatterns
+    urlpatterns = patterns('', url(
+        r'^media/(.*)$',
+        'django.views.static.serve',
+        kwargs={'document_root': os.path.join(settings.PROJECT_PATH, 'media')}
+    ),) + urlpatterns

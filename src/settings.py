@@ -83,8 +83,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
 
-if DEBUG:
-    TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.debug',)
 if USE_I18N:
     TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.i18n',)
 
@@ -120,25 +118,12 @@ INSTALLED_APPS = (
     # Project Applications
 )
 
-if DEBUG:
-    INSTALLED_APPS += ('debug_toolbar',)
-
 TEMPLATE_TAGS = (
     # 'sorl.thumbnail.templatetags.thumbnail',
 )
 
-# SORL Settings
-THUMBNAIL_EXTENSION = 'jpg'
-
-INTERNAL_IPS = (
-    '127.0.0.1',
-)
-
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
-
 try:
     from local_settings import *
 except ImportError:
+    print "Could not find local_settings.py, nice one bro."
     pass
