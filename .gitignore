@@ -1,6 +1,7 @@
 *.pyc
 
 # ignore emacs and vim tmp files
+.ropeproject
 .*.*.sw*
 \#*\#
 *~
