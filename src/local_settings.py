@@ -1,8 +1,0 @@
-SECRET_KEY = 'dev'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'development.sqlite',
-    }
-}
