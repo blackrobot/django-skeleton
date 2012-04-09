@@ -1,0 +1,15 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+/* TEAM */
+  Site: http://blenderbox.com
+  Twitter: @blenderbox
+  Location: Brooklyn, NY, USA
+
+/* THANKS */
+  Names (& URL): 
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery, Django
+  Software: Ubuntu

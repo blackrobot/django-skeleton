@@ -1,9 +1,0 @@
-# Django
-django
-
-# Django extensions
-werkzeug
-django-command-extensions
-
-# Django Debug Toolbar
-# -e git://github.com/robhudson/django-debug-toolbar.git
