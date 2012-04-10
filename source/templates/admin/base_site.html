@@ -1,10 +1,10 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 
-{% block title %}{{ title }} | {{ project_name|title }}{% endblock %}
+{% block title %}{{ title }} | {{ site_title|title }}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name">{{ project_name|title }}</h1>
+<h1 id="site-name">{{ site_title|title }}</h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

@@ -24,9 +24,9 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': "django.db.backends.mysql",
-            'NAME': "",
-            'USER': "",
-            'PASSWORD': "",
+            'NAME': "{{ project_name }}",
+            'USER': "root",
+            'PASSWORD': "root",
         },
     }
 

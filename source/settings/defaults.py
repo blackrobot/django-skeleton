@@ -85,7 +85,7 @@ STATICFILES_FINDERS = (
 if USE_I18N:
     TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.i18n',)
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'source.urls'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
@@ -136,7 +136,7 @@ ADMIN_NAMESPACE = "admin"
 
 # Local apps
 PROJECT_APPS = (
-    'app_utils.bootstrap',
+    'source.app_utils.bootstrap',
 )
 
 INSTALLED_APPS = (

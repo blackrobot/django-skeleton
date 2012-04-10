@@ -1,17 +1,17 @@
 """
 jQuery templates use constructs like:
 
-    {{if condition}} print something{{/if}}
+    {% templatetag openvariable %}if condition{% templatetag closevariable %} print something{% templatetag openvariable %}/if{% templatetag closevariable %}
 
 This, of course, completely screws up Django templates,
-because Django thinks {{ and }} means something.
+because Django thinks {% templatetag openvariable %} and {% templatetag closevariable %} means something.
 
-Wrap {% verbatim %} and {% endverbatim %} around those
+Wrap {% templatetag openblock %} verbatim {% templatetag closeblock %} and {% templatetag openblock %} endverbatim {% templatetag closeblock %} around those
 blocks of jQuery templates and this will try its best
 to output the contents with no changes.
 
 This version of verbatim template tag allows you to use tags
-like url {% url name %} or {% csrf_token %} within.
+like url {% templatetag openblock %} url name {% templatetag closeblock %} or {% templatetag openblock %} csrf_token {% templatetag closeblock %} within.
 """
 
 from django import template
@@ -45,7 +45,7 @@ def verbatim(parser, token):
             break
 
         if token.token_type == template.TOKEN_VAR:
-            text_and_nodes.append('{{')
+            text_and_nodes.append('{% templatetag openvariable %}')
             text_and_nodes.append(token.contents)
 
         elif token.token_type == template.TOKEN_TEXT:
@@ -70,6 +70,6 @@ def verbatim(parser, token):
             text_and_nodes.append(node)
 
         if token.token_type == template.TOKEN_VAR:
-            text_and_nodes.append('}}')
+            text_and_nodes.append('{% templatetag closevariable %}')
 
     return VerbatimNode(text_and_nodes)
