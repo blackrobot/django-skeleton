@@ -5,6 +5,6 @@ settings. On different environments, be sure to add their own
 an environment variable or by symlinking that file to `settings/local.py`.
 """
 try:
-    from settings.local import *
+    from source.settings.local import *
 except ImportError:
     pass

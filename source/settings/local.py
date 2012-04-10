@@ -1,6 +1,6 @@
 import sys
 
-from settings.defaults import *
+from source.settings.defaults import *
 
 
 DEBUG = LOCAL_SERVE = TEMPLATE_DEBUG = True
