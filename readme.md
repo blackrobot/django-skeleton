@@ -1,10 +1,17 @@
-```
+        $ export SITE_NAME="My Website" && export PROJECT_URL="my-website.com"
+        $ curl http://... | bash -s "my_project "My Project" "my-project.com"
+
+```sh
+
 $ django-admin.py startproject \
-      --extension=py,conf,md,txt \
-      --site_name="Example Name" \
-      --site_url="example.com" \
-      --template=https://github.com/blackrobot/django-skeleton/archive/master.zip \
-      "example_project"
+    --template=https://github.com/blackrobot/django-skeleton/archive/master.zip \
+    --extension=py,conf,md \
+    "project_name"
+
+$ cd project_name
+
+$ sed -i 's/{site_name}/My Website/g' * && \
+  sed -i 's/{project_url}/my-website\.com/g' *
 ```
 
 # Local Development

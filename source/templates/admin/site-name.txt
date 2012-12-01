@@ -1,1 +1,1 @@
-{{ site_name }}
+{site_name}
