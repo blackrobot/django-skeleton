@@ -1,4 +1,3 @@
-import multiprocessing
 from os import path
 
 base = path.realpath(path.join(path.dirname(__file__), "../../../"))
@@ -7,9 +6,8 @@ errorlog = path.join(base, "log/gunicorn.error.log")
 
 user = "www-data"
 group = "www-data"
-bind = "127.0.0.1:9000"
+bind = "127.0.0.1:9001"
 accesslog = None
 loglevel = "info"
 
-# Lower this number if you have multiple production sites on the same server
-workers = multiprocessing.cpu_count() * 2 + 1
+workers = 2

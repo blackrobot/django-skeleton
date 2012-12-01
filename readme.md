@@ -5,7 +5,7 @@
 
 1.  Create a virtual environment:
 
-        $ mkvirtualenv {{ project_name }} --no-site-packages
+        $ mkvirtualenv {{ project_name }} --distribute
 
 1.  Enter your vitrtual environment, and install the packages:
 
@@ -31,19 +31,7 @@
 1.  Create your database, then run syncdb and fake migrations:
 
         $ python source/manage.py syncdb --all
-        $ python source/manage.py migrate --fake
-
-    **Note**: Don't run fake migrations. This is bad.
 
 1.  Startup your server:
 
         $ python source/manage.py runserver
-
-
-## Python + Virtualenv on a Mac
-[These instructions](http://www.thisisthegreenroom.com/2011/installing-python-numpy-scipy-matplotlib-and-ipython-on-lion/),
-worked for me.  I followed them up to the `virtualenvwrapper`
-installation, then added this line to my ~/.bashrc (or ~/.zshrc) file,
-after my PATH declarations.
-
-    $ source /usr/local/share/python/virtualenvwrapper.sh

@@ -5,6 +5,15 @@ from django.core.cache import cache
 
 
 def cache_this(key):
+    """ Use this decorator to cache context functions that may use database
+    lookups or anything that may cause unnecessary load. It accepts "key" as
+    an argument, and an optional keyword argument "timeout" which is in
+    seconds.
+
+    >>> @cache_this("example_caching_key", timeout=500)
+    >>> def example(request):
+    >>>     return { 'foo': "bar" }
+    """
     def decorator(func):
         @wraps(func)
         def inner(*args, **kwargs):
@@ -19,12 +28,8 @@ def cache_this(key):
     return decorator
 
 
-@cache_this("default_extra_context")
-def extra_context(request):
-    """ This provides some extra context for the templates. """
+def default_context(request):
+    """ This provides some default extra context for the templates. """
     return {
-        'DEBUG': settings.DEBUG,
         'GOOGLE_ANALYTICS_ID': settings.GOOGLE_ANALYTICS_ID,
-        'MEDIA_URL': settings.MEDIA_URL,
-        'STATIC_URL': settings.STATIC_URL,
     }

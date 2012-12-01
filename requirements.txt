@@ -8,6 +8,5 @@ django-compressor
 django-debug-toolbar
 django-extensions
 gunicorn
-ipython
 wsgiref
 pylibmc
