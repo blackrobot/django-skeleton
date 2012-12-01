@@ -20,24 +20,24 @@ def prod():
     """ Sets up the environment for production. """
 
     # This is where the project lives on the server
-    env.base = path.join(env.www_dir, "example.com/")
+    env.base = path.join(env.www_dir, "{{ project_url }}/")
 
     env.app = path.join(env.base, "app/")
     env.venv = path.join(env.base, "env/")
     env.backup = path.join(env.base, "backup/")
 
-    env.process = "example.com"
+    env.process = "{{ project_url }}"
 
 
 @task
 def stage():
     """ Sets up the environment for devlopment. """
-    env.base = path.join(env.www_dir, "stage.example.com/")
+    env.base = path.join(env.www_dir, "stage.{{ project_url }}/")
 
     env.app = path.join(env.base, "app/")
     env.venv = path.join(env.base, "env/")
 
-    env.process = "stage.example.com"
+    env.process = "stage.{{ project_url }}"
 
 
 ###################

@@ -1,10 +1,14 @@
 {% extends "admin/base.html" %}
-{% load i18n %}
 
-{% block title %}{{ title }} | {{ site_title|title }}{% endblock %}
+{% block extrastyle %}
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu">
+<link rel="stylesheet" href="{{ STATIC_URL }}admin/css/custom.css">
+{% endblock %}
+
+{% block title %}{{ title }} | {% include "admin/site-name.txt" %}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name">{{ site_title|title }}</h1>
+<h1 id="site-name">{% include "admin/site-name.txt" %}</h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

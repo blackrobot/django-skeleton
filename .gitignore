@@ -1,14 +1,9 @@
 *.pyc
 
 # ignore emacs and vim tmp files
-.ropeproject
 .*.*.sw*
 \#*\#
 *~
 
-# ignore development db files
-*.sqlite
-
 # ignore environment and local settings files
-# local_settings.py
-local-env/
+# source/settings/local.py

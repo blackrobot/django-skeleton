@@ -171,8 +171,8 @@ INSTALLED_APPS = (
 # EMAIL #
 #########
 
-DEFAULT_FROM_EMAIL = "no-reply@example.com"
-EMAIL_SUBJECT_PREFIX = "[{{ project_name }}]"
+DEFAULT_FROM_EMAIL = "no-reply@{{ project_url }}"
+EMAIL_SUBJECT_PREFIX = "[{{ project_url }}]"
 
 
 ########################
