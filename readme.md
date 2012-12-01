@@ -1,4 +1,11 @@
-        $ django-admin.py startproject --extension=py,conf,md,txt --site_name="Example Name" --site_url="example.com" --template=https://github.com/blackrobot/django-skeleton/archive/master.zip "example_project"
+```
+$ django-admin.py startproject \
+      --extension=py,conf,md,txt \
+      --site_name="Example Name" \
+      --site_url="example.com" \
+      --template=https://github.com/blackrobot/django-skeleton/archive/master.zip \
+      "example_project"
+```
 
 # Local Development
 1.  Check out the repo:
