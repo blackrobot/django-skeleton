@@ -1,18 +1,16 @@
-        $ export SITE_NAME="My Website" && export PROJECT_URL="my-website.com"
-        $ curl http://... | bash -s "my_project "My Project" "my-project.com"
+# Creating a django project
+Run this in the shell, and pass the script: the project name, the
+project title, and the project url. For example: my_proj "My Project"
+my-project.com
 
-```sh
-
-$ django-admin.py startproject \
-    --template=https://github.com/blackrobot/django-skeleton/archive/master.zip \
-    --extension=py,conf,md \
-    "project_name"
-
-$ cd project_name
-
-$ sed -i 's/{site_name}/My Website/g' * && \
-  sed -i 's/{project_url}/my-website\.com/g' *
 ```
+$ curl https://raw.github.com/gist/d380fc34972be01ceefe/4b28dafbc3a7266f6e5ac771ef660666a34993c5/startproject.sh | \
+  bash -s 
+```
+
+https://gist.github.com/d380fc34972be01ceefe
+
+
 
 # Local Development
 1.  Check out the repo:
