@@ -5,10 +5,10 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}admin/css/custom.css">
 {% endblock %}
 
-{% block title %}{{ title }} | {% include "admin/site-name.txt" %}{% endblock %}
+{% block title %}{{ title }} | {{ SITE_TITLE }}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name">{% include "admin/site-name.txt" %}</h1>
+<h1 id="site-name">{{ SITE_TITLE }}</h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

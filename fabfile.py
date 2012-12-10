@@ -1,43 +1,51 @@
 from functools import wraps
-from os import path
+import os
 
 from fabric.api import cd, env, hide, run as _run, sudo as _sudo, task
 from fabric.colors import blue, green, red, yellow
+from fabric.contrib import django
+
+django.settings_module('source.settings.local')
+from django.conf import settings
 
 
 #####################
 # ENVIRONMENT SETUP #
 #####################
-env.use_ssh_config = True
+
+config = settings.FABRIC
+
+env.use_ssh_config = config['USE_SSH_CONFIG']
+env.hosts = config['HOSTS']
+
+if not env.use_ssh_config:
+    env.key_filename = config['KEY_FILENAME']
+
+# Defaults
+env.www_dir = "/var/www/"
 env.colors = True
 
-# This should be what the Host is called in your ~/.ssh/config
-env.hosts = ["{{ project_name }}"]
-env.www_dir = "/var/www/"
+
+def get_paths(sub_dir):
+    """ Given the sub-directory, this returns a 3-tuple of the base path
+    of the project, the app path, and the environment path.
+    """
+    base_dir = os.path.join(env.www_dir, sub_dir, '/')
+    app_dir = os.path.join(base_dir, "app/")
+    env_dir = os.path.join(base_dir, "env/")
+    return base_dir, app_dir, env_dir
+
 
 @task
 def prod():
     """ Sets up the environment for production. """
+    # Set the website's URL in your django settings
+    env.site_url = "example.com"
 
-    # This is where the project lives on the server
-    env.base = path.join(env.www_dir, "{project_url}/")
+    # Default paths
+    env.base, env.app, env.venv = get_paths(env.site_url)
 
-    env.app = path.join(env.base, "app/")
-    env.venv = path.join(env.base, "env/")
-    env.backup = path.join(env.base, "backup/")
-
-    env.process = "{project_url}"
-
-
-@task
-def stage():
-    """ Sets up the environment for devlopment. """
-    env.base = path.join(env.www_dir, "stage.{project_url}/")
-
-    env.app = path.join(env.base, "app/")
-    env.venv = path.join(env.base, "env/")
-
-    env.process = "stage.{project_url}"
+    env.process = env.site_url
 
 
 ###################
@@ -92,14 +100,14 @@ def sudo(command, show=True):
 @task
 def python(command):
     """ Runs a command with the environment's python binary. """
-    _python = path.join(env.venv, "bin/python")
+    _python = os.path.join(env.venv, "bin/python")
     return run("%s %s" % (_python, command))
 
 
 @task
 def manage(command):
     """ Run a django management command. """
-    with cd(path.join(env.app, "source/")):
+    with cd(os.path.join(env.app, "source/")):
         return python("manage.py %s" % command)
 
 
@@ -113,7 +121,7 @@ def git(command):
 @task
 def pip(command):
     """ Runs pip in the environment with the given command. """
-    _pip = path.join(env.venv, "bin/pip")
+    _pip = os.path.join(env.venv, "bin/pip")
     return run("%s %s" % (_pip, command))
 
 

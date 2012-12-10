@@ -26,6 +26,11 @@ INTERNAL_IPS = (
     '127.0.0.1',
 )
 
+# This will be used in the Django Admin
+SITE_TITLE = "{{ project_name|title }}"
+SITE_ID = 1
+SITE_URL = "example.com"
+
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 TIME_ZONE = 'America/New_York'
 
@@ -33,8 +38,6 @@ TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
 LANGUAGES = [('en', 'English')]
 DEFAULT_LANGUAGE = 0
-
-SITE_ID = 1
 
 SECRET_KEY = "{{ secret_key }}"
 
@@ -146,7 +149,7 @@ STATICFILES_DIRS = (
 
 # Local apps
 PROJECT_APPS = (
-    'source.utils.bootstrap',
+  # 'source.apps.example',
 )
 
 INSTALLED_APPS = (
@@ -171,9 +174,8 @@ INSTALLED_APPS = (
 # EMAIL #
 #########
 
-PROJECT_URL = "{project_url}"
-DEFAULT_FROM_EMAIL = "no-reply@{project_url}"
-EMAIL_SUBJECT_PREFIX = "[{project_url}]"
+DEFAULT_FROM_EMAIL = "no-reply@%s" % SITE_URL
+EMAIL_SUBJECT_PREFIX = "[%s]" % SITE_URL
 
 
 ########################

@@ -32,4 +32,5 @@ def default_context(request):
     """ This provides some default extra context for the templates. """
     return {
         'GOOGLE_ANALYTICS_ID': settings.GOOGLE_ANALYTICS_ID,
+        'SITE_TITLE': settings.SITE_TITLE,
     }

@@ -1,4 +1,6 @@
-from source.settings.default import *
+import os
+
+from source.settings.defaults import *
 
 
 DEBUG = True
@@ -28,3 +30,22 @@ SESSION_ENGINE = "django.contrib.sessions.backends.db"
 # python -m smtpd -n -c DebuggingServer localhost:1025
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+# Fabric
+# HOME_DIR is only used for keyfile discovery. Delete this line if using
+# an SSH config.
+HOME_DIR = os.environ.get('HOME', '~')
+FABRIC = {
+    # Uncomment these lines if using your SSH config
+    # 'USE_SSH_CONFIG': True,
+    # 'HOSTS': ["{{ project_name }}"],
+
+    # Delete these lines if using your SSH config
+    'USE_SSH_CONFIG': False,
+    'HOSTS': ["deploy@%s:22" % SITE_URL],
+    'KEY_FILENAME': os.path.join(HOME_DIR, ".ssh/%s.pem" % SITE_URL),
+
+    # For writing deploy configs
+    'PROD_URL': SITE_URL,
+    'STAGE_URL': "stage.%s" % SITE_URL,
+}
