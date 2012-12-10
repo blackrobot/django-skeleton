@@ -9,7 +9,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Django Admin
-    (r"^%s/" % settings.ADMIN_NAMESPACE, include(admin.site.urls)),
+    url(r"^%s/" % settings.ADMIN_NAMESPACE, include(admin.site.urls)),
 
     # Now in a template, you can: reverse("some_namespace:url_name")
     #  url(r"^name/$", inclue('app.name.urls', namespace="some_namespace")),
