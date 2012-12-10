@@ -31,7 +31,7 @@ def html_design_view(*args, **kwargs):
 
 
 def html_design_urlpatterns():
-    re = r"^%s/(?<path>.*)$" % settings.HTML_DESIGN_NAMESPACE
+    re = r"^%s/(?P<path>.*)$" % settings.HTML_DESIGN_NAMESPACE
     return patterns('', url(re, html_design_view))
 
 
