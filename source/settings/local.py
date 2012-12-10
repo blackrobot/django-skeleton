@@ -44,8 +44,4 @@ FABRIC = {
     'USE_SSH_CONFIG': False,
     'HOSTS': ["deploy@%s:22" % SITE_URL],
     'KEY_FILENAME': os.path.join(HOME_DIR, ".ssh/%s.pem" % SITE_URL),
-
-    # For writing deploy configs
-    'PROD_URL': SITE_URL,
-    'STAGE_URL': "stage.%s" % SITE_URL,
 }
