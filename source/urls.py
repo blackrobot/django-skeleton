@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.defaults import patterns, url, include
 from django.contrib import admin
 
-from source.utils.tools import html_design_urlpatterns, local_serve_patterns
+from source.utils.tools import html_design_urlpatterns, local_serve_urlpatterns
 
 
 admin.autodiscover()
@@ -20,4 +20,4 @@ if getattr(settings, "DEBUG", False):
     urlpatterns = html_design_urlpatterns() + urlpatterns
 
 if getattr(settings, "LOCAL_SERVE", False):
-    urlpatterns = local_serve_patterns() + urlpatterns
+    urlpatterns = local_serve_urlpatterns() + urlpatterns
