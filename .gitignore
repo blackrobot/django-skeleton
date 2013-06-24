@@ -7,3 +7,4 @@
 
 # ignore environment and local settings files
 # source/settings/local.py
+# .tmp/
