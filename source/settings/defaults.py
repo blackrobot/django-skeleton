@@ -7,7 +7,8 @@ def get_path(*args):
 
 
 # Project Base Path
-PROJECT_ROOT = get_path(os.path.dirname(__file__), '../')
+SOURCE_ROOT = get_path(os.path.dirname(__file__), '..')
+PROJECT_ROOT = get_path(SOURCE_ROOT, '..')
 
 
 ##################
@@ -30,12 +31,16 @@ INTERNAL_IPS = (
 SITE_TITLE = "{{ project_name|title }}"
 SITE_ID = 1
 SITE_URL = "example.com"
+USE_X_FORWARDED_HOSTS = True
+ALLOWED_HOSTS = (
+    ".{}".format(SITE_URL),
+)
 
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 TIME_ZONE = 'America/New_York'
 
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 LANGUAGES = [('en', 'English')]
 DEFAULT_LANGUAGE = 0
 
@@ -48,12 +53,13 @@ USE_I18N = USE_L10N = False
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.eggs.Loader',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     # Django
     'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.csrf',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'django.core.context_processors.static',
@@ -66,7 +72,10 @@ TEMPLATE_DIRS = (
     get_path(PROJECT_ROOT, 'templates'),
 )
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE_CLASSES = (
+    # Cache Update
+    'django.middleware.cache.UpdateCacheMiddleware',
+
     # Django
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -74,14 +83,12 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 
+    # Cache Fetch
+    'django.middleware.cache.FetchFromCacheMiddleware',
+
     # Third Party
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-]
-
-# Cache Update and Fetch go first and last respectively
-MIDDLEWARE_CLASSES.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')
-MIDDLEWARE_CLASSES.append('django.middleware.cache.FetchFromCacheMiddleware')
-MIDDLEWARE_CLASSES = tuple(MIDDLEWARE_CLASSES)
+)
 
 # URL Stuff
 ROOT_URLCONF = 'source.urls'
@@ -98,11 +105,31 @@ STATICFILES_FINDERS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
     'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
         'mail_admins': {
             'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+            'filters': ['require_debug_false'],
+        },
     },
     'loggers': {
         'django.request': {
@@ -110,7 +137,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-    }
+    },
 }
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
@@ -123,6 +150,18 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 # Set these in your source/settings/local.py
 DATABASES = None
 CACHES = None
+# CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+# CACHE_MIDDLEWARE_ALIAS = 'default'
+# CACHE_MIDDLEWARE_SECONDS = 300
+
+
+###########
+# SESSION #
+###########
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2  # Two Weeks
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 
 #########
@@ -130,16 +169,18 @@ CACHES = None
 #########
 
 # Change these in your source/settings/local.py
+PUBLIC_ROOT = get_path(PROJECT_ROOT, '..', 'public')
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = get_path(PROJECT_ROOT, '../media/')
+MEDIA_ROOT = get_path(PUBLIC_ROOT, 'media')
 
 STATIC_URL = '/static/'
-STATIC_ROOT = get_path(PROJECT_ROOT, '../static/')
+STATIC_ROOT = get_path(PUBLIC_ROOT, 'static')
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 STATICFILES_DIRS = (
-    get_path(PROJECT_ROOT, "../public/"),
+    get_path(PUBLIC_ROOT, 'public'),
 )
 
 
@@ -149,7 +190,7 @@ STATICFILES_DIRS = (
 
 # Local apps
 PROJECT_APPS = (
-  # 'source.apps.example',
+    # 'source.apps.example',
 )
 
 INSTALLED_APPS = (
@@ -174,18 +215,22 @@ INSTALLED_APPS = (
 # EMAIL #
 #########
 
-DEFAULT_FROM_EMAIL = "no-reply@%s" % SITE_URL
-EMAIL_SUBJECT_PREFIX = "[%s]" % SITE_URL
+SERVER_EMAIL = DEFAULT_FROM_EMAIL = "no-reply@{}".format(SITE_URL)
+EMAIL_SUBJECT_PREFIX = "[{}] ".format(SITE_URL)
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 25
 
 
 ########################
 # APPLICATION SETTINGS #
 ########################
 
-HTML_DESIGN_ROOT = get_path(PROJECT_ROOT, "templates/html/")
-HTML_DESIGN_NAMESPACE = "html"
+HTML_DESIGN_ROOT = get_path(SOURCE_ROOT, 'templates', 'html')
+HTML_DESIGN_RELATIVE_PATH = 'html'
+HTML_DESIGN_NAMESPACE = 'html'
 
 COMPRESS_ENABLED = True
+COMPRESS_URL = STATIC_URL
 COMPRESS_PRECOMPILERS = (
     # Sass
     ('text/x-sass', 'sass {infile} {outfile}'),
@@ -194,8 +239,54 @@ COMPRESS_PRECOMPILERS = (
     # Less
     ('text/less', 'lessc {infile} {outfile}'),
 )
+COMPRESS_CSS_FILTERS = (
+    'compressor.filters.cssmin.CSSMinFilter',
+)
+COMPRESS_JS_FILTERS = (
+    'compressor.filters.jsmin.JSMinFilter',
+)
 
 GOOGLE_ANALYTICS_ID = ''
+
+
+# Fabric: Override these in local.py as needed
+FABRIC_DEFAULTS = {
+    'colors': True,
+    'use_ssh_config': True,
+    'repo': "git@github.com:user/example.git",
+    'db_dir': '.tmp/db',
+}
+FABRIC_BASE_PATH = os.path.join('/', 'var', 'www', '%(site_url)s')
+FABRIC_PATH_TEMPLATES = {
+    'base': FABRIC_BASE_PATH,
+    'app': os.path.join(FABRIC_BASE_PATH, 'app'),
+    'backup': os.path.join(FABRIC_BASE_PATH, 'backup'),
+    'log': os.path.join(FABRIC_BASE_PATH, 'log'),
+    'venv': os.path.join(FABRIC_BASE_PATH, 'env'),
+}
+FABRIC_ENVIRONMENTS = {
+    # 'dev': {
+    #     'django_settings': 'source.settings.dev',
+    #     'process': 'example.dev',
+    #     'site_url': 'example.dev',
+    #     'vagrant': True,
+    # },
+
+    # 'stage': {
+    #     'branch': 'master',
+    #     'django_settings': 'source.settings.stage',
+    #     'process': 'stage.example.com',
+    #     'site_url': 'stage.example.com',
+    # },
+
+    # 'prod': {
+    #     'branch': 'prod',
+    #     'django_settings': 'source.settings.prod',
+    #     'process': 'example.com',
+    #     'site_url': 'example.com',
+    # },
+}
+
 
 # Debug Toolbar
 def show_debug_toolbar(request):
